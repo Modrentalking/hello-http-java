@@ -41,7 +41,8 @@ jobs:
     - name: Dump GCP environment config
       run: |-
         gcloud info
-        gcloud --quiet auth configure-docker
+        gcloud auth configure-docker us-central1-docker.pkg.dev
+#        gcloud --quiet auth configure-docker
 
     - name: Docker Build
       run: |-
