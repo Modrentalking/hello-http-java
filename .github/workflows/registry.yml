@@ -8,7 +8,7 @@ on:
       - master
 
 env:
-  PROJECT_ID: diploma
+  PROJECT_ID: tensile-will-419716
   GKE_CLUSTER: foodhunt-dev
   GKE_ZONE: europe-central2-a
   IMAGE_NAME: java_app
