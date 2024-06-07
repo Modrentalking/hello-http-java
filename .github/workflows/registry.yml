@@ -1,0 +1,62 @@
+name: Build image and deploy
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+      branches: 
+      - master
+
+env:
+  PROJECT_ID: diploma
+  GKE_CLUSTER: foodhunt-dev
+  GKE_ZONE: europe-central2-a
+  IMAGE_NAME: java_app
+  USE_GKE_GCLOUD_AUTH_PLUGIN: True
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ registry }}'
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - run: |-
+        gcloud components install gke-gcloud-auth-plugin
+#        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+    - name: Dump GCP environment config
+      run: |-
+        gcloud info
+        gcloud --quiet auth configure-docker
+
+    - name: Docker Build
+      run: |-
+        cp $GOOGLE_APPLICATION_CREDENTIALS gcp-sa-key.json
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA" .
+        docker tag "gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA" "gcr.io/$PROJECT_ID/$IMAGE_NAME:latest"
+
+    - name: Publish
+      run: |-
+        docker push "gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA"
+        docker push "gcr.io/$PROJECT_ID/$IMAGE_NAME:latest"
+
+#    - name: Deploy
+#      run: |-
+#        DEPLOY_IMAGE=gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
+#        sed -i 's|$DEPLOY_IMAGE|'"$DEPLOY_IMAGE"'|g' ./deploy/deployment.yaml
+#        kubectl apply -f deploy/deployment.yaml
+#        kubectl rollout status --namespace=placement -w deployment/placement-api
