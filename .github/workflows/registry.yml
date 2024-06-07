@@ -46,13 +46,13 @@ jobs:
     - name: Docker Build
       run: |-
         cp $GOOGLE_APPLICATION_CREDENTIALS gcp-sa-key.json
-        docker build --tag "gcr.io/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA" .
-        docker tag "gcr.io/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA" "gcr.io/$PROJECT_ID/images/$IMAGE_NAME:latest"
+        docker build --tag "us-central1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA" .
+        docker tag "us-central1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA" "us-central1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest"
 
     - name: Publish
       run: |-
-        docker push "gcr.io/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA"
-        docker push "gcr.io/$PROJECT_ID/images/$IMAGE_NAME:latest"
+        docker push "us-central1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest"
 
 #    - name: Deploy
 #      run: |-
