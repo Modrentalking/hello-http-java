@@ -18,4 +18,4 @@ spec:
         image: $DEPLOY_IMAGE
         ports:
         - containerPort: 8000
-        imagePullPolicy: IfNotPresent
+      imagePullPolicy: Always
