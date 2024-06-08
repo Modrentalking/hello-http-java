@@ -58,5 +58,6 @@ jobs:
       run: |-
         DEPLOY_IMAGE=us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
         sed -i 's|$DEPLOY_IMAGE|'"$DEPLOY_IMAGE"'|g' ./k8s/deployment.yml
+        cat k8s/deployment.yml | grep image
         kubectl apply -f k8s/deployment.yml
 #        kubectl rollout status --namespace=java-application -w deployment/placement-api
