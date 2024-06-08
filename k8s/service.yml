@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-cip-service
+  namespace: java-application
+spec:
+  type: ClusterIP
+  # Uncomment the below line to create a Headless Service
+  # clusterIP: None
+  selector:
+    app: java-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
