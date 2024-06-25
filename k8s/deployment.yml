@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: java-app-container
-        image: us-central1-docker.pkg.dev/tensile-will-419716/images/java_app:085629e2d86a037dde0da754d133ee0a3e21d66d
+        image: $DEPLOY_IMAGE
         ports:
         - containerPort: 8000
