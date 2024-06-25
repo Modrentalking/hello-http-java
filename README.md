@@ -41,3 +41,51 @@ To deploy the application, follow these steps:
    kubectl apply -f k8s/service.yml
    kubectl apply -f k8s/ingress.yml
    kubectl apply -f k8s/manage-cert.yml
+2. Then you can use `GitHub Actions`
+
+## Telegram API
+
+Getting started with [Telegram Bot API](https://core.telegram.org/bots/api).
+
+* `token`: Telegram authorization token.
+* `to`: Unique identifier for this chat.
+
+How to get unique identifier from telegram api:
+
+```bash
+curl https://api.telegram.org/bot<token>/getUpdates
+```
+
+See the result: (get chat id like `303257503`)
+
+```json{
+  "update_id": 144477937,
+  "message": {
+    "message_id": 1268676,
+    "from": {
+      "id": 303257503,
+      "is_bot": false,
+      "first_name": "Modest",
+      "last_name": "Volyntsevich",
+      "username": "modrxxx",
+      "language_code": "ru"
+    },
+    "chat": {
+      "id": 303257503,
+      "first_name": "Modest",
+      "last_name": "Volyntsevich",
+      "username": "modrxxx",
+      "type": "private"
+    },
+    "date": 1719295595,
+    "text": "/start",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ]
+  }
+}
+```
