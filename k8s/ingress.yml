@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jap
+  namespace: java-application
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: java-app
+    networking.gke.io/managed-certificates: diplom
+    kubernetes.io/ingress.class: "gce"
+#    kubernetes.io/ingress.allow-http: "false"
+
+spec:
+  rules:
+  - host: diplom.piratesprimates.com
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: java-app
+            port:
+              number: 80
+
+
+
+
