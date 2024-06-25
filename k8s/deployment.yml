@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-app-deployment
+  name: java-app
   namespace: java-application
 spec:
   replicas: 3
@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
       - name: java-app-container
-        image: $DEPLOY_IMAGE
+        image: us-central1-docker.pkg.dev/tensile-will-419716/images/java_app:085629e2d86a037dde0da754d133ee0a3e21d66d
         ports:
         - containerPort: 8000
-      #imagePullPolicy: Always
